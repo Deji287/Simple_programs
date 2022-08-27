@@ -1,29 +1,41 @@
-// code to convert to roman numeral
+// code to convert roman numerial to arabic numerial
+const numToRoman = (str) => {
+  if (str === null) return -1;
 
-const numToRoman = (num) => {
-  const romanToNum = {
-    M: 1000,
-    CM: 900,
-    D: 500,
-    CD: 400,
-    C: 100,
-    XC: 90,
-    L: 50,
-    XL: 40,
-    X: 10,
-    XI: 9,
-    V: 5,
-    VI: 4,
-    I: 1,
-  };
+  let num = charToInt(str.charAt(0));
+  let prev = 0;
+  let curr = 0;
 
-  let roman = "";
-  for (let key in romanToNum) {
-    while (num >= romanToNum[key]) {
-      roman += key;
-      num -= romanToNum[key];
+  for (let i = 1; i < str.length; i++) {
+    curr = charToInt(str.charAt(i));
+    prev = charToInt(str.charAt(i - 1));
+
+    if (curr <= prev) {
+      num += curr;
+    } else {
+      num = num - prev * 2 + curr;
     }
   }
-  return roman;
+  return num;
 };
-console.log(numToRoman(2064));
+const charToInt = (c) => {
+  switch (c) {
+    case "I":
+      return 1;
+    case "V":
+      return 5;
+    case "X":
+      return 10;
+    case "L":
+      return 50;
+    case "C":
+      return 100;
+    case "D":
+      return 500;
+    case "M":
+      return 1000;
+    default:
+      return -1;
+  }
+};
+console.log(numToRoman("MMVI"));
